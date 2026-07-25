@@ -68,8 +68,6 @@ def normalize_text(text: str) -> str:
 
         if line == "":
             blank_streak += 1
-            # Collapse repeated blank lines but keep single blank lines,
-            # since chunk.py relies on them to detect paragraph/list boundaries.
             if blank_streak > 1:
                 continue
         else:

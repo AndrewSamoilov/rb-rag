@@ -97,7 +97,6 @@ def split_into_blocks(text: str, chunk_size: int) -> list[str]:
             prose_lines.append(line)
 
     if code_lines:
-        # Unterminated fence: keep it whole rather than dropping content.
         blocks.append("\n".join(code_lines))
     flush_prose()
 
@@ -128,9 +127,6 @@ def pack_blocks(blocks: list[str], chunk_size: int, overlap: int) -> list[str]:
                 carried.insert(0, part)
                 carried_len += len(part)
             if len(carried) == len(current):
-                # Nothing was dropped, so the next block still won't fit and we'd
-                # loop forever re-emitting the same chunk. Drop the overlap here
-                # to guarantee forward progress.
                 carried = []
             current = carried
             current_len = sum(len(p) for p in current) + 2 * max(0, len(current) - 1)
