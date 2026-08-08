@@ -48,3 +48,17 @@ Query: router GET POST example
 #3 | distance=1.1020 | doc_chunk_017
   ```sh id: 1234; page: 1; name: manu; message: this_is_great ```  ### Map as querystring or postform parameters  ```sh POST /post?ids[a]=1234&ids[b]=hello HTTP/1.1 Content-Type: application/x-www-form-urlencoded  names[fi...
 Comment: relevant
+
+
+
+ Query: explaine pls how can i do post request
+================================================================================
+#1 | distance=1.0435 | doc_chunk_010
+  ## Routing  > Learn how to define routes, handle parameters, and organize endpoints.  ### Using GET, POST, PUT, PATCH, DELETE and OPTIONS...
+--------------------------------------------------------------------------------
+#2 | distance=1.1717 | doc_chunk_017
+  ```sh id: 1234; page: 1; name: manu; message: this_is_great ```  ### Map as querystring or postform parameters  ```sh POST /post?ids[a]=1234&ids[b]=hello HTTP/1.1 Content-Type: application/x-www-form-urlencoded  names[fi...
+--------------------------------------------------------------------------------
+#3 | distance=1.1987 | doc_chunk_051
+  Sample request  ```sh $ curl -v -X POST \   http://localhost:8080/loginJSON \   -H 'content-type: application/json' \   -d '{ "user": "manu" }' > POST /loginJSON HTTP/1.1 > Host: localhost:8080 > User-Agent: curl/7.51.0 ...
+--------------------------------------------------------------------------------
