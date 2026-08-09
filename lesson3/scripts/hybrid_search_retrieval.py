@@ -21,7 +21,7 @@ def main() -> None:
 
     chunks_by_id = {c["chunk_id"]: c for c in chunks}
 
-    query = "How do I skip logging?"
+    query = "explain pls how can i do post request"
 
     query_tokens = query.split()
 

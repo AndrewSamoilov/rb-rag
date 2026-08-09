@@ -51,7 +51,7 @@ Comment: relevant
 
 
 
- Query: explaine pls how can i do post request
+ Query: explain pls how can i do post request
 ================================================================================
 #1 | distance=1.0435 | doc_chunk_010
   ## Routing  > Learn how to define routes, handle parameters, and organize endpoints.  ### Using GET, POST, PUT, PATCH, DELETE and OPTIONS...
