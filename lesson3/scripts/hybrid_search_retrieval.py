@@ -10,7 +10,9 @@ CHUNKS_PATH = Path("/Users/andrew/rag/lesson3/data/processed/chunks.jsonl")
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 FAISS_INDEX_PATH = Path("/Users/andrew/rag/lesson3/index/faiss.index")
 TOP_K = 5
-
+METADATA_FILTER = {
+    "document_id": "doc",
+}
 
 def main() -> None:
     index = faiss.read_index(str(FAISS_INDEX_PATH))
@@ -20,14 +22,15 @@ def main() -> None:
     chunks_by_id = {c["chunk_id"]: c for c in chunks}
 
     query = "How do I skip logging?"
+
     query_tokens = query.split()
 
-    splited_chuk_text = []
+    split_chunk_text = []
 
     for chunk in chunks:
-        splited_chuk_text.append(chunk["text"].split())
+        split_chunk_text.append(chunk["text"].split())
 
-    bm25 = BM25Okapi(splited_chuk_text)
+    bm25 = BM25Okapi(split_chunk_text)
 
     scores = bm25.get_scores(query_tokens)
 
@@ -60,7 +63,18 @@ def main() -> None:
             enriched_chunk = {**chunk_obj, "score": round(score, 5)}
             result.append(enriched_chunk)
 
-    print(result)
+    post_filter = apply_post_filter(result, METADATA_FILTER)
+    print(post_filter)
+
+
+
+def apply_post_filter(chunks: list[dict], metadata_filter: dict) -> list[dict]:
+    filtered_chunks = []
+    for chunk in chunks:
+        metadata = chunk.get("metadata", {})
+        if all(metadata.get(key) == value for key, value in metadata_filter.items()):
+            filtered_chunks.append(chunk)
+    return filtered_chunks
 
 
 
