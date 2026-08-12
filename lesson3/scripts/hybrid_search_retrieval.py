@@ -15,13 +15,17 @@ METADATA_FILTER = {
 }
 
 def main() -> None:
+    result = retrieval("how to skip logging")
+    print(result)
+
+
+
+def retrieval(query: str):
     index = faiss.read_index(str(FAISS_INDEX_PATH))
     model = SentenceTransformer(MODEL_NAME)
     chunks = ch.load_jsonl(CHUNKS_PATH)
 
     chunks_by_id = {c["chunk_id"]: c for c in chunks}
-
-    query = "explain pls how can i do post request"
 
     query_tokens = query.split()
 
@@ -48,7 +52,6 @@ def main() -> None:
     for pos in top_positions:
         bm25_chunk_ids.append(chunks[pos]["chunk_id"])
 
-
     rank = calc_rank(bm25_chunk_ids, faiss_chunk_ids)
 
     sorted_rank = dict(sorted(rank.items(), key=lambda item: item[1], reverse=True))
@@ -64,7 +67,8 @@ def main() -> None:
             result.append(enriched_chunk)
 
     post_filter = apply_post_filter(result, METADATA_FILTER)
-    print(post_filter)
+
+    return post_filter
 
 
 
