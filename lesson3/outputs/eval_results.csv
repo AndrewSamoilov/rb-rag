@@ -1,0 +1,54 @@
+id,question,expected_behavior,answer,retrieved_chunks,route_or_mode,tools_used,task_success,groundedness,answer_quality,latency_ms,errors,notes,trace_steps
+1,How do I define a GET route in Gin?,Відповісти за документацією Gin про маршрутизацію і навести retrieved chunks.,"Could you clarify your question? I can help with Gin documentation, the latest Gin release, or the current number of open GitHub issues.",none,clarification,none,no,not_applicable,bad,5,wrong_route,Автоматичні перевірки виявили: wrong_route.,classify_request -> ask_clarification -> build_clarification_answer
+2,How do I configure middleware and recovery in Gin?,"Знайти інструкції щодо middleware, пояснити налаштування й навести джерела.","To configure middleware and recovery in Gin, you can start by creating a router without any middleware by using `gin.New()`. Then, add global middleware using the `Use` method. For logging, add `gin.Logger()`. To customize recovery from panics, use `gin.CustomRecovery()` where you can define a handler function to manage recovered panics and send responses accordingly.
+
+Here is an example:
+
+```go
+func main() {
+  r := gin.New()
+
+  // Logger middleware writes logs to the default writer
+  r.Use(gin.Logger())
+
+  // Custom Recovery middleware to handle panics and respond with a 500 error
+  r.Use(gin.CustomRecovery(func(c *gin.Context, recovered any) {
+    if err, ok := recovered.(string); ok {
+      c.String(http.StatusInternalServerError, fmt.Sprintf(""error: %s"", err))
+    }
+    c.AbortWithStatus(http.StatusInternalServerError)
+  }))
+
+  r.GET(""/"", func(c *gin.Context) {
+    c.String(http.StatusOK, ""ohai"")
+  })
+
+  r.Run("":8080"")
+}
+```
+This configuration sets up logging and a custom recovery mechanism for your Gin application (doc_chunk_028).","doc_chunk_023, doc_chunk_024, doc_chunk_028, doc_chunk_011",RAG,hybrid_search_retrieval.retrieval,yes,good,good,8548,none,Відповідає очікуваному маршруту та перевіркам відповіді.,classify_request -> run_documentation_lookup -> generate_grounded_answer
+3,How do I bind a JSON request body in Gin?,Знайти документацію щодо request binding і відповісти з посиланнями на chunks.,"To bind a JSON request body in Gin, you need to set the corresponding binding tag `json:""fieldname""` on all the struct fields you want to bind, and then use the `BindJSON` method provided by Gin. For example:
+
+```go
+type MyStruct struct {
+    FieldA string `json:""field_a""`
+    FieldB string `json:""field_b""`
+}
+
+func handler(c *gin.Context) {
+    var json MyStruct
+    if err := c.BindJSON(&json); err != nil {
+        // handle error
+    }
+    // use the bound data
+}
+```
+
+Gin provides `Bind`, `BindJSON`, and other binding methods for different formats (JSON, XML, YAML, etc.) that you can use to bind request data (doc_chunk_045).","doc_chunk_092, doc_chunk_045, doc_chunk_081, doc_chunk_057, doc_chunk_005",RAG,hybrid_search_retrieval.retrieval,yes,good,good,4627,none,Відповідає очікуваному маршруту та перевіркам відповіді.,classify_request -> run_documentation_lookup -> generate_grounded_answer
+4,How do I skip logging for selected Gin paths?,Використати retrieval документації; кейс перевіряє розпізнавання питання про logging.,"Could you clarify your question? I can help with Gin documentation, the latest Gin release, or the current number of open GitHub issues.",none,clarification,none,no,not_applicable,bad,7,wrong_route,Автоматичні перевірки виявили: wrong_route.,classify_request -> ask_clarification -> build_clarification_answer
+5,How should Gin support quantum teleportation middleware?,"Використати RAG і сказати, що retrieved context не містить цієї інформації.","I do not have enough information in the provided context to answer how Gin should support quantum teleportation middleware. The context only describes general middleware usage and custom JSON codec support (doc_chunk_023, doc_chunk_108).","doc_chunk_113, doc_chunk_108, doc_chunk_023",RAG,hybrid_search_retrieval.retrieval,yes,good,good,3929,none,Відповідає очікуваному маршруту та перевіркам відповіді.,classify_request -> run_documentation_lookup -> generate_grounded_answer
+6,What is the latest Gin version?,Викликати GitHub release tool і повернути його актуальний результат.,"The latest Gin release is v1.12.0, published on 2026-02-28T10:12:25Z. Release page: https://github.com/gin-gonic/gin/releases/tag/v1.12.0",none,tool:release,external_tool.call_release_tool,yes,not_applicable,good,528,none,Відповідає очікуваному маршруту та перевіркам відповіді.,classify_request -> run_release_lookup -> build_tool_answer
+7,How many open issues does Gin have on GitHub?,Викликати GitHub issues tool і повернути його актуальний результат.,The gin-gonic/gin repository currently has 605 open issues. Issues page: https://github.com/gin-gonic/gin/issues,none,tool:issues,external_tool.call_issues_tool,yes,not_applicable,good,725,none,Відповідає очікуваному маршруту та перевіркам відповіді.,classify_request -> run_github_issues_lookup -> build_tool_answer
+8,Tell me something interesting.,"Попросити користувача уточнити запит, а не вигадувати відповідь.","Could you clarify your question? I can help with Gin documentation, the latest Gin release, or the current number of open GitHub issues.",none,clarification,none,yes,not_applicable,good,5,none,Відповідає очікуваному маршруту та перевіркам відповіді.,classify_request -> ask_clarification -> build_clarification_answer
+9,Where should I ask a Gin deployment question?,Знайти contributing guide і порадити Discussions Forum.,"Could you clarify your question? I can help with Gin documentation, the latest Gin release, or the current number of open GitHub issues.",none,clarification,none,no,not_applicable,bad,5,wrong_route,Автоматичні перевірки виявили: wrong_route.,classify_request -> ask_clarification -> build_clarification_answer
+10,What version and middleware changes should I adopt?,"Попросити уточнення, бо запит поєднує актуальний реліз і питання з документації.","The latest Gin release is v1.12.0, published on 2026-02-28T10:12:25Z. Release page: https://github.com/gin-gonic/gin/releases/tag/v1.12.0",none,tool:release,external_tool.call_release_tool,no,not_applicable,bad,234,wrong_route,Автоматичні перевірки виявили: wrong_route.,classify_request -> run_release_lookup -> build_tool_answer
